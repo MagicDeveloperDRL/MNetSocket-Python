@@ -23,10 +23,10 @@ class MsgProtol(object):
 
 
     def pack(self,cmd,_body,_recv=1):
-        body = json.dumps(_body).encode() # 将消息正文转换成Json格式，并转换成字节编码
+        body = json.dumps(_body) # 将消息正文转换成Json格式
         header = [body.__len__(),cmd,_recv] # 将消息头按顺序组成一个列表
         headPack= struct.pack("!3I", *header) #  使用struct打包消息头,得到字节编码
-        sendData = headPack+body  # 将消息头字节和消息正文字节组合在一起
+        sendData = headPack+body.encode()  # 将消息头字节和消息正文字节组合在一起
         return sendData
 
     def unpack(self,data,msgHandler):
