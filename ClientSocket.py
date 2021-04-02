@@ -81,9 +81,9 @@ class ClientSocket(object):
         try:
             if(self._socket!=None):
                 self._socket.close()
-                logger.info('socket closed')
+                logger.info('套接字已经关闭')
         except socket.error:
-            logging.debug("socket closed exception")
+            logging.debug("套接字关闭出错")
             raise
 
 if __name__ == '__main__':
@@ -94,8 +94,8 @@ if __name__ == '__main__':
     protol["type"] = MsgCmd.PARAM.name
     protol["apiNumber"]="大家伙"
     protol["AcademyName"] = "s"
-    protol["logPath"] = "s"
-    protol["brainNames"] = "s"
+    protol["logPath"] = "大家伙"
+    protol["brainNames"] = "大家伙"
     protol["externalBrainNames"] = "s"
     # 发送消息
     client.Send(MsgCmd.PARAM.value,protol,1)

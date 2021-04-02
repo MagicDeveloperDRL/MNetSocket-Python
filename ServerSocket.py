@@ -67,7 +67,7 @@ class ServerSocket(object):
         try:
             flag = True
             logger.info("开始接收消息...")
-            while True:
+            while True and self._is_init_socket:
                 msg = self._client_socket.recv(self._buffer_size)# 接收消息
                 flag = self.msg_protol.unpack(msg,self._handle_msg)# 解封消息包
             #logger.info("接收消息结束...")
@@ -85,7 +85,7 @@ class ServerSocket(object):
             p = json.loads(body)  # 将字符串解码并且反序列化为json对象
             #print(body)
             # 检查消息类型
-            if cmd == "EEXIT":
+            if cmd == "EXIT":
                 self.close()
                 return
             elif cmd == "INFORM":
@@ -97,6 +97,11 @@ class ServerSocket(object):
                 print(self._log_path)
                 print(self._brain_names)
                 self._recv_init_msg = True
+                if is_recv ==1:
+                    print("应该发送消息")
+                    self._send(MsgCmd.INFORM.value,"这是消息")
+            elif cmd == "REQUEST":
+                print(p)
                 if is_recv ==1:
                     print("应该发送消息")
                     self._send(MsgCmd.INFORM.value,"这是消息")
